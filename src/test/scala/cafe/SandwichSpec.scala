@@ -32,6 +32,18 @@ class SandwichSpec extends PropSpec with PropertyChecks with Matchers {
         }
     }
 
+    property("A ham sandwich should pass more validation") {
+
+        forAll{ (name: String, cost: Int, slicesOfHam: Int) =>
+
+                val sandwich = Sandwich.makeHamSandwich(name, cost, slicesOfHam)
+
+                sandwich.foreach { s =>
+                    s.slicesOfHam should be (1 +- 3)
+                }
+        }
+    }
+
     property("A ham sandwich should fail if invalid slices provided") {
 
         forAll((validNames, "name"), (validCost, "cost"), (invalidSlices, "slices")) {
